@@ -1,0 +1,11 @@
+.Banner {
+  display: flex;
+  justify-content: center;
+  height: 800px;
+}
+
+.HomeBanner {
+  width: 60%;
+  height: 500px;
+  margin-top: 2rem;
+}

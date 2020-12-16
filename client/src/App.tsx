@@ -1,10 +1,13 @@
 import React from "react";
+import Banner from "./Components/Banner";
+import Header from "./Components/Header";
 import "./StyleSheet/App.css";
 
 const App = () => {
   return (
     <div className="App">
-      <h1>App</h1>
+      <Header />
+      <Banner />
     </div>
   );
 };
