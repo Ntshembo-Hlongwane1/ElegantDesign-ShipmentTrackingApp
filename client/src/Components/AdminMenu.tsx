@@ -76,9 +76,11 @@ const AdminMenu = () => {
       authStatus.auth_status === true &&
       authStatus.user_role === "admin" ? (
         <div className="Admin__menu">
-          <div className="menu__Dashboard">
-            <h3 className="menu__link">DashBoard</h3>
-          </div>
+          <Link to="/admin-dashboard" className="Router__link">
+            <div className="menu__Dashboard">
+              <h3 className="menu__link">DashBoard</h3>
+            </div>
+          </Link>
           <div className="menu__logout" onClick={LogUserOut}>
             <h3 className="menu__link">Logout</h3>
           </div>

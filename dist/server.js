@@ -10,6 +10,7 @@ const mongoose_1 = __importDefault(require("mongoose"));
 const express_session_1 = __importDefault(require("express-session"));
 const connect_mongodb_session_1 = __importDefault(require("connect-mongodb-session"));
 const Auth_1 = __importDefault(require("./Routes/Auth/Auth"));
+const ShipmentOrder_1 = __importDefault(require("./Routes/ShipmentOrder/ShipmentOrder"));
 dotenv_1.default.config();
 const app = express_1.default();
 const origin = {
@@ -55,6 +56,7 @@ mongoose_1.default.connect(mongoURI, connectionOptions, (error) => {
 });
 //==========================================================Server EndPoints============================================
 app.use(Auth_1.default);
+app.use(ShipmentOrder_1.default);
 //=================================================Server Configs & Connection==========================================
 const PORT = process.env.NODE_ENV || 5000;
 app.listen(PORT, () => {

@@ -6,6 +6,7 @@ import {
   SignInReducer,
   isLoggedInReducer,
 } from "./Reducers/Auth/Auth";
+import { FetchAllOrdersReducers } from "./Reducers/FetchAllOrderReducer/FetchAllOrderReducer";
 
 const initialState = {};
 
@@ -21,6 +22,7 @@ const reducer = combineReducers({
   userSignInStatus: SignInReducer,
   useLogOutStatus: LogOutReducer,
   userAuthStatus: isLoggedInReducer,
+  AllShipmentOrders: FetchAllOrdersReducers,
 });
 
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

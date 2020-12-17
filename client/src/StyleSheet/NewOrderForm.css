@@ -1,0 +1,22 @@
+.NewOrder__Form {
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+  margin: 0% auto;
+  margin-top: 3rem;
+}
+
+.Form__ownerDetail,
+.Form__itemDetail {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 2rem;
+}
+
+.NewOrder__FormHeader {
+  margin-bottom: 1.4rem;
+}
+
+.inputField {
+  margin-bottom: 1rem;
+}

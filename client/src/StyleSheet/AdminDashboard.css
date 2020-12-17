@@ -17,7 +17,7 @@
 .admin__dashboardContent {
   width: 100%;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   flex-wrap: wrap;
   padding: 1rem;
   margin-left: 1rem;
@@ -27,15 +27,18 @@
 .activeShipments,
 .takeInShipment,
 .FinishedShipments,
+.allDrivers,
 .allDrivers {
   transition: box-shadow 0.3s ease;
   padding: 2rem;
   cursor: pointer;
+  margin-left: 2rem;
 }
 .allDeliveries:hover,
 .activeShipments:hover,
 .takeInShipment:hover,
 .FinishedShipments:hover,
+.allDrivers:hover,
 .allDrivers:hover {
   box-shadow: 0 0 35px -2px rgba(0, 0, 0, 0.2);
 }

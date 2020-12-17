@@ -5,10 +5,10 @@ import "./StyleSheet/App.css";
 import { useDispatch } from "react-redux";
 import { isAutheticated } from "./store/Actions/Auth/Auth";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import axios from "axios";
 import SignUp from "./Components/SignUp";
 import SignIn from "./Components/SignIn";
 import AdminDashBoard from "./Components/AdminDashBoard";
+import TakeNewOrder from "./Components/TakeNewOrder";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -25,6 +25,10 @@ const App = () => {
         <Route path="/user-signin/:user_role" exact={true}>
           <Header />
           <SignIn />
+        </Route>
+        <Route path="/admin-dashboard/new-order" exact={true}>
+          <Header />
+          <TakeNewOrder />
         </Route>
         <Route path="/admin-dashboard" exact={true}>
           <Header />

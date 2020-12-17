@@ -5,6 +5,7 @@ import mongoose from "mongoose";
 import expressSession from "express-session";
 import MongoStore from "connect-mongodb-session";
 import AuthRoute from "./Routes/Auth/Auth";
+import ShipmentRoute from "./Routes/ShipmentOrder/ShipmentOrder";
 dotenv.config();
 
 const app = express();
@@ -60,7 +61,7 @@ mongoose.connect(mongoURI, connectionOptions, (error) => {
 
 //==========================================================Server EndPoints============================================
 app.use(AuthRoute);
-
+app.use(ShipmentRoute);
 //=================================================Server Configs & Connection==========================================
 const PORT = process.env.NODE_ENV || 5000;
 app.listen(PORT, () => {
