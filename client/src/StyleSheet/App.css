@@ -2,3 +2,20 @@
   margin: 0;
   padding: 0;
 }
+
+html {
+  background-color: #f6f9fc;
+}
+
+.Router__link {
+  text-decoration: none;
+  color: black;
+}
+
+.Home-header {
+  color: #f5f5f5f5;
+}
+
+.Notifaction-card {
+  top: 20%;
+}

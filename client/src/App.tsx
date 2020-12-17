@@ -6,9 +6,11 @@ import { useDispatch } from "react-redux";
 import { isAutheticated } from "./store/Actions/Auth/Auth";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import axios from "axios";
+import SignUp from "./Components/SignUp";
+import SignIn from "./Components/SignIn";
+import AdminDashBoard from "./Components/AdminDashBoard";
 
 const App = () => {
-  // alert(window.location.href);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(isAutheticated());
@@ -16,17 +18,17 @@ const App = () => {
   return (
     <Router>
       <Switch>
-        <Route path="/user-signup/admin" exact={true}>
+        <Route path="/user-signup/:user_role" exact={true}>
           <Header />
-          <h1>Admin</h1>
+          <SignUp />
         </Route>
-        <Route path="/user-signup/customer" exact={true}>
+        <Route path="/user-signin/:user_role" exact={true}>
           <Header />
-          <h1>customer</h1>
+          <SignIn />
         </Route>
-        <Route path="/user-signup/shipment-team" exact={true}>
+        <Route path="/admin-dashboard" exact={true}>
           <Header />
-          <h1>ShipmentTeam</h1>
+          <AdminDashBoard />
         </Route>
         <Route path="/" exact={true}>
           <Header />

@@ -1,0 +1,29 @@
+.Form {
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+  margin: 0 auto;
+  margin-top: 3rem;
+}
+
+.inputField {
+  margin-bottom: 1rem;
+}
+
+.AuthForm__header {
+  margin-bottom: 1rem;
+}
+
+.btn {
+  width: 40%;
+  border-radius: 999px;
+  padding: 0.5rem;
+  transition: ease-in-out 0.4s;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.btn:hover {
+  background-color: black;
+  color: white;
+}

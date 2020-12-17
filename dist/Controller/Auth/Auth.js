@@ -145,7 +145,11 @@ class AuthController {
             }
             return response
                 .status(200)
-                .json({ auth_status: true, user_role: userSession.user_role });
+                .json({
+                auth_status: true,
+                user_role: userSession.user_role,
+                username: userSession.username,
+            });
         }
         catch (error) {
             return response

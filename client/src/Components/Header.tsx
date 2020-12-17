@@ -5,13 +5,16 @@ import "reactjs-popup/dist/index.css";
 import AdminMenu from "./AdminMenu";
 import CustomerMenu from "./CustomerMenu";
 import ShipmentTeamMenu from "./ShipmentTeamMenu";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   return (
     <nav className="Header">
-      <div className="Header__top">
-        <h4 className="headerTop__companyName">Elegant Design</h4>
-      </div>
+      <Link to="/" className="Router__link Home-header">
+        <div className="Header__top">
+          <h4 className="headerTop__companyName">Elegant Design</h4>
+        </div>
+      </Link>
       <div className="Header__bottom">
         <div className="Header__home">
           <h4 className="nav-link">Home</h4>
