@@ -1,0 +1,17 @@
+[role="tooltip"].popup-content {
+  width: 30% !important;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 0px 3px;
+}
+
+.AssignDriverFrom-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.AssignDriverFrom-form > input {
+  margin-bottom: 1.5rem;
+}
+
+.assign-driver-btn {
+  margin-bottom: 1rem;
+}

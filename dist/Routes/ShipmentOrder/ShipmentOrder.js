@@ -10,5 +10,8 @@ const router = express_1.Router();
 router.post("/api/create-new-order", (request, response) => {
     ShipmentOrderController.CreateOrder(request, response);
 });
+router.get("/api/get-all-order", (request, response) => {
+    ShipmentOrderController.FetchAllShipemtOrder(request, response);
+});
 exports.default = router;
 //# sourceMappingURL=ShipmentOrder.js.map

@@ -14,9 +14,11 @@ const AdminDashBoard = () => {
             <h3 className="admin__dashBoardHeader">{`Welcome Back ${authStatus.username}`}</h3>
           </div>
           <div className="admin__dashboardContent">
-            <div className="allDeliveries">
-              <h4>All Shipments</h4>
-            </div>
+            <Link className="Router__link" to="/admin-dashboard/all-orders">
+              <div className="allDeliveries">
+                <h4>All Shipments</h4>
+              </div>
+            </Link>
             <div className="activeShipments">
               <h4>Active Shipment</h4>
             </div>

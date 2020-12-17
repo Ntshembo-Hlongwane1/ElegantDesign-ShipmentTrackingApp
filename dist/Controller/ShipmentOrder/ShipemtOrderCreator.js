@@ -17,8 +17,9 @@ const twilio_1 = __importDefault(require("twilio"));
 const nodemailer_1 = __importDefault(require("nodemailer"));
 const ShipmentOrder_1 = require("../../Model/ShipmentOrders/ShipmentOrder");
 const dotenv_1 = __importDefault(require("dotenv"));
+const ShipmentOrderFetcher_1 = __importDefault(require("./ShipmentOrderFetcher"));
 dotenv_1.default.config();
-class ShipmentOrderController {
+class ShipmentOrderController extends ShipmentOrderFetcher_1.default {
     CreateOrder(request, response) {
         const form = new formidable_1.IncomingForm();
         try {

@@ -9,6 +9,7 @@ import SignUp from "./Components/SignUp";
 import SignIn from "./Components/SignIn";
 import AdminDashBoard from "./Components/AdminDashBoard";
 import TakeNewOrder from "./Components/TakeNewOrder";
+import AllShipmentOrder from "./Components/AllShipmentOrder";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -29,6 +30,10 @@ const App = () => {
         <Route path="/admin-dashboard/new-order" exact={true}>
           <Header />
           <TakeNewOrder />
+        </Route>
+        <Route path="/admin-dashboard/all-orders" exact={true}>
+          <Header />
+          <AllShipmentOrder />
         </Route>
         <Route path="/admin-dashboard" exact={true}>
           <Header />

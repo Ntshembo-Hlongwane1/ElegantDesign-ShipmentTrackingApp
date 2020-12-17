@@ -1,0 +1,51 @@
+.Screen-loader {
+  width: 100%;
+  height: 90vh;
+}
+
+.orders__headers {
+  text-align: center;
+  margin-top: 2rem;
+  font-size: 2rem;
+}
+
+.orders__headers > h1 {
+  font-weight: 100;
+}
+
+.orders {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 3rem;
+  margin-bottom: 2rem;
+  flex-direction: column;
+  width: 70%;
+  margin-left: 2rem;
+}
+
+.order__details {
+  transition: box-shadow 0.3s ease;
+  padding: 2rem;
+  cursor: pointer;
+}
+.order__details:hover {
+  box-shadow: 0 0 35px -2px rgba(0, 0, 0, 0.2);
+}
+
+.package__detail,
+.package__location,
+.package__status,
+.package__driver,
+.buttons-statuschanges,
+.user__orders {
+  margin-bottom: 1rem;
+}
+.package__detail > h4,
+.package__location > h4,
+.package__status > h4,
+.package__driver > h4,
+.buttons-statuschanges > h4,
+.user__orders > h4,
+.order__owner > h4 {
+  font-weight: 300;
+}
