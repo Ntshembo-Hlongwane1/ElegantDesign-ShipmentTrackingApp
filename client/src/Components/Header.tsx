@@ -19,7 +19,7 @@ const Header = () => {
         <div className="Header__admin">
           <Popup
             trigger={<h4 className="nav-link">Admin</h4>}
-            position="right center"
+            position="bottom center"
           >
             <AdminMenu />
           </Popup>
@@ -27,7 +27,7 @@ const Header = () => {
         <div className="Header__customer">
           <Popup
             trigger={<h4 className="nav-link">Customer</h4>}
-            position="right center"
+            position="bottom center"
           >
             <CustomerMenu />
           </Popup>
@@ -35,7 +35,7 @@ const Header = () => {
         <div className="Header__shipementCrew">
           <Popup
             trigger={<h4 className="nav-link">Shipment Team</h4>}
-            position="right center"
+            position="bottom center"
           >
             <ShipmentTeamMenu />
           </Popup>
