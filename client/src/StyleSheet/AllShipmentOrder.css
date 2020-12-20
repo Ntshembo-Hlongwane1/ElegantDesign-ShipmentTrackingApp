@@ -49,3 +49,7 @@
 .order__owner > h4 {
   font-weight: 300;
 }
+
+.show-more-btn {
+  margin-top: 1rem;
+}

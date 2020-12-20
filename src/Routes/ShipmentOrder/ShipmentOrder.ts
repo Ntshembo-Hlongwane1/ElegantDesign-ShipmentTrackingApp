@@ -12,4 +12,7 @@ router.get("/api/get-all-order", (request, response) => {
   ShipmentOrderController.FetchAllShipemtOrder(request, response);
 });
 
+router.post("/api/assign-driver", (request, response) => {
+  ShipmentOrderController.AssignDriver(request, response);
+});
 export default router;

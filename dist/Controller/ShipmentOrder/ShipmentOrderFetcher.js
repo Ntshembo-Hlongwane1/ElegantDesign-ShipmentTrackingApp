@@ -8,9 +8,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const ShipmentOrder_1 = require("../../Model/ShipmentOrders/ShipmentOrder");
-class ShipmentOrderFetcher {
+const ShipmentOrderUpdater_1 = __importDefault(require("./ShipmentOrderUpdater"));
+class ShipmentOrderFetcher extends ShipmentOrderUpdater_1.default {
     FetchAllShipemtOrder(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
             try {

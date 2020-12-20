@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { shipmentOrderModel } from "../../Model/ShipmentOrders/ShipmentOrder";
+import ShipmentUpdate from "./ShipmentOrderUpdater";
 
 interface ShipmentFetcher {
   FetchAllShipemtOrder(
@@ -8,7 +9,9 @@ interface ShipmentFetcher {
   ): Promise<Response<any>>;
 }
 
-export default class ShipmentOrderFetcher implements ShipmentFetcher {
+export default class ShipmentOrderFetcher
+  extends ShipmentUpdate
+  implements ShipmentFetcher {
   async FetchAllShipemtOrder(request: Request, response: Response) {
     try {
       const data = await shipmentOrderModel.find();

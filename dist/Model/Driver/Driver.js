@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.driverModel = void 0;
 const mongoose_1 = __importDefault(require("mongoose"));
 const driverSchema = new mongoose_1.default.Schema({
-    driver_name: { type: String, required: true },
+    driver_name: { type: String, required: true, unique: true },
     driver_id: { type: String, required: true },
     assignedDeliveries: { type: Array, required: true },
 });

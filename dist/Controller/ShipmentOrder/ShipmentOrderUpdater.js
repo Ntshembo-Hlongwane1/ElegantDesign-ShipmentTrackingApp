@@ -33,34 +33,35 @@ class ShipmentUpdate {
                 if (!driverCompany || !driverName || !driverID || !packageID) {
                     return response.status(400).json({ msg: "All fields are required" });
                 }
-                const userPackage = yield ShipmentOrder_1.shipmentOrderModel.findOne({
-                    _id: packageID,
-                });
-                userPackage.assignedDriver = driverName;
-                userPackage.status = "Driver Assigned";
-                const isDriverExisting = yield Driver_1.driverModel.findOne({
+                const driver = yield Driver_1.driverModel.findOne({
                     driver_name: driverName,
                 });
-                if (!isDriverExisting) {
+                if (!driver) {
                     const newDriver = new Driver_1.driverModel({
                         driver_name: driverName,
                         driver_id: driverID,
-                        assignedDeliveries: [packageID],
+                        assignedDeliveries: driverID,
                     });
                     const savedDriver = yield newDriver.save();
+                    const userPackage = yield ShipmentOrder_1.shipmentOrderModel.findOne({
+                        _id: packageID,
+                    });
+                    userPackage.assignedDriver = driverName;
+                    userPackage.status = "Awaiting PickUp";
+                    const updatedUserPackage = yield ShipmentOrder_1.shipmentOrderModel.findOneAndUpdate({ _id: packageID }, userPackage, { new: true });
                     const twilio__AccountSiD = process.env.twilio__accountSiD;
                     const twilio__authToken = process.env.twilio__authToken;
                     const client = twilio_1.default(twilio__AccountSiD, twilio__authToken);
-                    const message = `Driver has been assigned to deliver your package, Name:${driverName} from ${driverCompany}`;
+                    const message = `A driver has been assigned to ship your package await pickup date, confirmation will be sent`;
                     const messageOptions = {
                         body: message,
                         from: process.env.twilio__number,
                         to: process.env.test__number,
                     };
-                    client.messages.create(messageOptions, (error, item) => {
+                    client.messages.create(messageOptions, (errro, item) => {
                         if (error) {
                             return response.status(500).json({
-                                msg: `Network Error: Failed to Send Sms to ${userPackage.owner_fullName}`,
+                                msg: `Failed to send Sms to ${userPackage.owner_fullName} having Number: ${process.env.test__number}`,
                             });
                         }
                         const transporter = nodemailer_1.default.createTransport({
@@ -71,28 +72,91 @@ class ShipmentUpdate {
                             },
                         });
                         const messageOptions = {
-                            from: "noreply@ElegantDesigns",
+                            from: process.env.sendinBlue__login,
                             to: userPackage.owner_email,
-                            subject: "Driver Assign To Deliver Package",
+                            subject: "Order Assigned A Driver",
                             html: `
-  
-                      <h1>Order has been assigned a Driver</h1>
-                      <h3>Name: ${driverName}</h3>
-                      <h4>From; ${driverCompany} Company</h4>
-  
-                      <h3 style="margin-top:3rem;">Queries?</h3>
-                      <h4>Call: 0824566774</h4>
-                      <h4>Email: ElegantDesign@gmail.com</h4>
-                  
-                  `,
+              
+                <h1>Your order has been assigned a driver</h1>
+                <h3>Name:${driverName}</h3>
+                <h3>Company:${driverCompany}</h3>
+                <h3>DriverID:${driverID}</h3>
+
+                <h4 style="margin-top:4rem;">Any Queries?</h4>
+                <h4>Email: elegantdesigns@gmail.com</h4>
+                <h4>Contact: 0215266698</h4>
+              
+              `,
                         };
                         transporter.sendMail(messageOptions, (error, info) => {
                             if (error) {
-                                return response.status(500).json({ msg: "Failed" });
+                                return response.status(500).json({
+                                    msg: `Failed to send email to ${userPackage.owner_fullName} with an email: ${userPackage.owner_email}`,
+                                });
                             }
+                            return response.status(200).json({
+                                msg: "Driver has been successfully assigned, Sms and Email was sent to user",
+                            });
                         });
                     });
                 }
+                driver.assignedDeliveries = [driverID, ...driver.assignedDeliveries];
+                const userPackage = yield ShipmentOrder_1.shipmentOrderModel.findOne({
+                    _id: packageID,
+                });
+                userPackage.assignedDriver = driverName;
+                userPackage.status = "Awaiting PickUp";
+                const updatedUserPackage = yield ShipmentOrder_1.shipmentOrderModel.findOneAndUpdate({ _id: packageID }, userPackage, { new: true });
+                const twilio__AccountSiD = process.env.twilio__accountSiD;
+                const twilio__authToken = process.env.twilio__authToken;
+                const client = twilio_1.default(twilio__AccountSiD, twilio__authToken);
+                const message = `A driver has been assigned to ship your package await pickup date, confirmation will be sent`;
+                const messageOptions = {
+                    body: message,
+                    from: process.env.twilio__number,
+                    to: process.env.test__number,
+                };
+                client.messages.create(messageOptions, (errro, item) => {
+                    if (error) {
+                        return response.status(500).json({
+                            msg: `Failed to send Sms to ${userPackage.owner_fullName} having Number: ${process.env.test__number}`,
+                        });
+                    }
+                    const transporter = nodemailer_1.default.createTransport({
+                        service: "SendinBlue",
+                        auth: {
+                            user: process.env.sendinBlue__login,
+                            pass: process.env.sendinBlue__pass,
+                        },
+                    });
+                    const messageOptions = {
+                        from: process.env.sendinBlue__login,
+                        to: userPackage.owner_email,
+                        subject: "Order Assigned A Driver",
+                        html: `
+              
+                <h1>Your order has been assigned a driver</h1>
+                <h3>Name:${driverName}</h3>
+                <h3>Company:${driverCompany}</h3>
+                <h3>DriverID:${driverID}</h3>
+
+                <h4 style="margin-top:4rem;">Any Queries?</h4>
+                <h4>Email: elegantdesigns@gmail.com</h4>
+                <h4>Contact: 0215266698</h4>
+              
+              `,
+                    };
+                    transporter.sendMail(messageOptions, (error, info) => {
+                        if (error) {
+                            return response.status(500).json({
+                                msg: `Failed to send email to ${userPackage.owner_fullName} with an email: ${userPackage.owner_email}`,
+                            });
+                        }
+                        return response.status(200).json({
+                            msg: "Driver has been successfully assigned, Sms and Email was sent to user",
+                        });
+                    });
+                });
             }));
         }
         catch (error) {
@@ -102,4 +166,5 @@ class ShipmentUpdate {
         }
     }
 }
+exports.default = ShipmentUpdate;
 //# sourceMappingURL=ShipmentOrderUpdater.js.map

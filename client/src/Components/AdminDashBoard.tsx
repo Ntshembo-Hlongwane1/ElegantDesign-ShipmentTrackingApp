@@ -6,6 +6,9 @@ import { Link } from "react-router-dom";
 const AdminDashBoard = () => {
   const { authStatus } = useSelector((state) => state.userAuthStatus);
 
+  const AlertMessage = () => {
+    alert("Feature Not Available in demo");
+  };
   return (
     <div className="AdminDashBoard">
       {authStatus && (
@@ -16,25 +19,35 @@ const AdminDashBoard = () => {
           <div className="admin__dashboardContent">
             <Link className="Router__link" to="/admin-dashboard/all-orders">
               <div className="allDeliveries">
-                <h4>All Shipments</h4>
+                <button className="btn-menu">All Shipments</button>
               </div>
             </Link>
             <div className="activeShipments">
-              <h4>Active Shipment</h4>
+              <button className="btn-menu" onClick={AlertMessage}>
+                Active Shipment
+              </button>
             </div>
             <Link to="/admin-dashboard/new-order" className="Router__link">
               <div className="takeInShipment">
-                <h4>Take In Shipment Packge Details</h4>
+                <button className="btn-menu">
+                  Take In Shipment Packge Details
+                </button>
               </div>
             </Link>
             <div className="FinishedShipments">
-              <h4>All Finished Shipments</h4>
+              <button className="btn-menu" onClick={AlertMessage}>
+                All Finished Shipments
+              </button>
             </div>
             <div className="allDrivers">
-              <h4>Assign Driver For Shipment</h4>
+              <button className="btn-menu" onClick={AlertMessage}>
+                Assign Driver For Shipment
+              </button>
             </div>
             <div className="allDrivers">
-              <h4>Pending Order</h4>
+              <button className="btn-menu" onClick={AlertMessage}>
+                Pending Order
+              </button>
             </div>
           </div>
         </div>
