@@ -16,9 +16,11 @@ const Header = () => {
         </div>
       </Link>
       <div className="Header__bottom">
-        <div className="Header__home">
-          <h4 className="nav-link">Home</h4>
-        </div>
+        <Link to="/" className="Router__link Home-header">
+          <div className="Header__home">
+            <h4 className="nav-link">Home</h4>
+          </div>
+        </Link>
         <div className="Header__admin">
           <Popup
             trigger={<h4 className="nav-link">Admin</h4>}

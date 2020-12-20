@@ -10,6 +10,7 @@ import SignIn from "./Components/SignIn";
 import AdminDashBoard from "./Components/AdminDashBoard";
 import TakeNewOrder from "./Components/TakeNewOrder";
 import AllShipmentOrder from "./Components/AllShipmentOrder";
+import ShipmentHistory from "./Components/ShipmentHistory";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -22,6 +23,10 @@ const App = () => {
         <Route path="/user-signup/:user_role" exact={true}>
           <Header />
           <SignUp />
+        </Route>
+        <Route path="/shipment-history" exact={true}>
+          <Header />
+          <ShipmentHistory />
         </Route>
         <Route path="/user-signin/:user_role" exact={true}>
           <Header />

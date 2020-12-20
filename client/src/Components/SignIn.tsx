@@ -40,7 +40,7 @@ class SignIn extends Component<any, Partial<IState>> {
         window.location.reload(false);
         break;
       case "Customer":
-        history.push("/customer-active-orders");
+        history.push("/shipment-history");
         window.location.reload(false);
         break;
       default:

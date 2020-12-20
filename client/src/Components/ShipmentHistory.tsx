@@ -3,11 +3,10 @@ import { useSelector, useDispatch } from "react-redux";
 import { FetchAllOrder } from "../store/Actions/FetchAllOrder/FetchAllOrder";
 import ScreenLoader from "../images/loadingScreen.gif";
 import "../StyleSheet/AllShipmentOrder.css";
-import Popup from "reactjs-popup";
-import "reactjs-popup/dist/index.css";
-import AssignDriverForm from "./AssignDriverForm";
+
 import "../StyleSheet/AssignDriverForm.css";
-const AllShipmentOrder = () => {
+
+const ShipmentHistory = () => {
   const { loading, ShipmentOrders, error } = useSelector(
     (state) => state.AllShipmentOrders
   );
@@ -40,9 +39,9 @@ const AllShipmentOrder = () => {
               return (
                 <div className="order__details">
                   <div className="user__orders">
-                    <h2>{`Package Owner: Order #${idx + 1}`}</h2>
+                    <h2>{`My Details: Order #${idx + 1}`}</h2>
                     <div className="order__owner">
-                      <h4>{`Package Owner: ${item.owner_fullName}`}</h4>
+                      <h4>{`My Name: ${item.owner_fullName}`}</h4>
                       <h4>{`Email: ${item.owner_email}`}</h4>
                       <h4>{`Phone Number: ${item.owner_phoneNumber}`}</h4>
                       <h4>{`Package ID: ${item.Item_ID}`}</h4>
@@ -93,29 +92,7 @@ const AllShipmentOrder = () => {
                             : item.arrivalTime
                         }`}</h4>
                       </div>
-                      <div className="buttons-statuschanges">
-                        <Popup
-                          trigger={
-                            <button
-                              disabled={
-                                item.assignedDriver === "" ? false : true
-                              }
-                            >
-                              Assign Driver
-                            </button>
-                          }
-                          position="right top"
-                        >
-                          <AssignDriverForm packageID={item._id} />
-                        </Popup>
 
-                        <button>Cancel Order</button>
-                        <button
-                          disabled={item.assignedDriver === "" ? false : true}
-                        >
-                          Request Package Confirmation (Driver)
-                        </button>
-                      </div>
                       {toggle ? (
                         <button
                           className="btn show-more-btn"
@@ -136,4 +113,4 @@ const AllShipmentOrder = () => {
   );
 };
 
-export default AllShipmentOrder;
+export default ShipmentHistory;
