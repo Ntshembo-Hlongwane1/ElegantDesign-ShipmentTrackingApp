@@ -10,7 +10,7 @@ import axios from "axios";
 const CustomerMenu = () => {
   const { authStatus } = useSelector((state) => state.userAuthStatus);
   const history = useHistory();
-
+  // alert(JSON.stringify(authStatus));
   const AlertERror = () => {
     alert("Functionality not available in demo");
   };
@@ -76,7 +76,7 @@ const CustomerMenu = () => {
     <div className="CustomerMenu">
       {authStatus &&
       authStatus.auth_status === true &&
-      authStatus.user_role === "customer" ? (
+      authStatus.user_role === "Customer" ? (
         <div className="customerMenu">
           <Link to="/shipment-history" className="Router__link">
             <div className="customerMenu__history">
@@ -94,12 +94,6 @@ const CustomerMenu = () => {
         </div>
       ) : (
         <div className="customerMenu">
-          <Link to="/user-signup/customer" className="Router__link">
-            <div className="cutomerMenu__signup">
-              <h3 className="menu__link">SignUp</h3>
-            </div>
-          </Link>
-
           <Link to="/user-signin/customer" className="Router__link">
             <div className="customerMenu__signin">
               <h3 className="menu__link">SignIn</h3>

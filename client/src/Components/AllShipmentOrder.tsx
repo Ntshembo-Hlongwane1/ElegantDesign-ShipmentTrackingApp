@@ -7,6 +7,7 @@ import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
 import AssignDriverForm from "./AssignDriverForm";
 import "../StyleSheet/AssignDriverForm.css";
+import UpdatePackageLocation from "./UpdatePackageLocation";
 const AllShipmentOrder = () => {
   const { loading, ShipmentOrders, error } = useSelector(
     (state) => state.AllShipmentOrders
@@ -110,11 +111,12 @@ const AllShipmentOrder = () => {
                         </Popup>
 
                         <button>Cancel Order</button>
-                        <button
-                          disabled={item.assignedDriver === "" ? false : true}
+                        <Popup
+                          trigger={<button>Update Package Location</button>}
+                          position="right top"
                         >
-                          Request Package Confirmation (Driver)
-                        </button>
+                          <UpdatePackageLocation packageID={item._id} />
+                        </Popup>
                       </div>
                       {toggle ? (
                         <button

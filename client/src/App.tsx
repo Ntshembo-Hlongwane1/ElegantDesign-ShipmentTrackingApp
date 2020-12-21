@@ -16,7 +16,7 @@ const App = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(isAutheticated());
-  }, []);
+  }, [dispatch]);
   return (
     <Router>
       <Switch>

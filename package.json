@@ -23,6 +23,7 @@
     "@types/express": "^4.17.9",
     "@types/node": "^14.14.14",
     "D": "^1.0.0",
+    "axios": "^0.21.0",
     "bcrypt": "^5.0.0",
     "cloudinary": "^1.23.0",
     "connect-mongodb-session": "^2.4.1",
@@ -37,6 +38,7 @@
     "twilio": "^3.54.1"
   },
   "devDependencies": {
+    "@types/axios": "^0.14.0",
     "@types/bcrypt": "^3.0.0",
     "@types/connect-mongodb-session": "^2.4.0",
     "@types/cors": "^2.8.9",

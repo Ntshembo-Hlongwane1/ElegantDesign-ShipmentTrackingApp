@@ -3,10 +3,8 @@ import { shipmentOrderModel } from "../../Model/ShipmentOrders/ShipmentOrder";
 import ShipmentUpdate from "./ShipmentOrderUpdater";
 
 interface ShipmentFetcher {
-  FetchAllShipemtOrder(
-    request: Request,
-    response: Response
-  ): Promise<Response<any>>;
+  FetchAllShipemtOrder(request: Request, response: Response): Promise<Response>;
+  FetchSpecificOrder(request: Request, response: Response): Promise<Response>;
 }
 
 export default class ShipmentOrderFetcher
@@ -21,6 +19,22 @@ export default class ShipmentOrderFetcher
       return response
         .status(500)
         .json({ msg: "Network Error: Failed to fetch all Shipment Orders" });
+    }
+  }
+  async FetchSpecificOrder(request: Request, response: Response) {
+    const userSession = request.session.user || false;
+    const username = userSession.username;
+
+    try {
+      const userOrders = await shipmentOrderModel.find({
+        owner_fullName: username,
+      });
+
+      return response.status(200).json(userOrders);
+    } catch (error) {
+      return response
+        .status(500)
+        .json({ msg: "Network Error: Failed to fetch all shipment Orders" });
     }
   }
 }

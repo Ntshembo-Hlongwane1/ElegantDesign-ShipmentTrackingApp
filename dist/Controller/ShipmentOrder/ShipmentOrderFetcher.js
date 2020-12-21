@@ -28,6 +28,23 @@ class ShipmentOrderFetcher extends ShipmentOrderUpdater_1.default {
             }
         });
     }
+    FetchSpecificOrder(request, response) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const userSession = request.session.user || false;
+            const username = userSession.username;
+            try {
+                const userOrders = yield ShipmentOrder_1.shipmentOrderModel.find({
+                    owner_fullName: username,
+                });
+                return response.status(200).json(userOrders);
+            }
+            catch (error) {
+                return response
+                    .status(500)
+                    .json({ msg: "Network Error: Failed to fetch all shipment Orders" });
+            }
+        });
+    }
 }
 exports.default = ShipmentOrderFetcher;
 //# sourceMappingURL=ShipmentOrderFetcher.js.map

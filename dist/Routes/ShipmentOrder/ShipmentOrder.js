@@ -16,5 +16,8 @@ router.get("/api/get-all-order", (request, response) => {
 router.post("/api/assign-driver", (request, response) => {
     ShipmentOrderController.AssignDriver(request, response);
 });
+router.get("/api/fetch-user-orders", (request, response) => {
+    ShipmentOrderController.FetchSpecificOrder(request, response);
+});
 exports.default = router;
 //# sourceMappingURL=ShipmentOrder.js.map

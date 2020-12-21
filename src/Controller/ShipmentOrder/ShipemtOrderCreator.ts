@@ -5,6 +5,10 @@ import { shipmentOrderModel } from "../../Model/ShipmentOrders/ShipmentOrder";
 import { Request, Response } from "express";
 import dotenv from "dotenv";
 import ShipmentOrderFetcher from "./ShipmentOrderFetcher";
+import { userModel } from "../../Model/Users/Users";
+import Bcrypt from "bcrypt";
+import axios from "axios";
+import { passwordGenerator } from "../../Utils/Generators/PasswordGen";
 
 dotenv.config();
 
@@ -19,7 +23,7 @@ export default class ShipmentOrderController
     const form = new IncomingForm();
 
     try {
-      form.parse(request, async (error, fields, files) => {
+      form.parse(request, async (error, fields: Fields) => {
         if (error) {
           return response
             .status(500)
@@ -70,62 +74,77 @@ export default class ShipmentOrderController
           Item_ID,
         });
 
-        const savedOrder = await newOrder.save();
-
+        const savedOrder: any = await newOrder.save();
+        /*
+         * Endpoint --> https://jimba.co.za/sms.php?cell=0731820631&message=Tesing%20the%20app
+         */
         if (savedOrder) {
-          const twilio__AccountSiD = process.env.twilio__accountSiD;
-          const twilio__authToken = process.env.twilio__authToken;
-          const client = twilio(twilio__AccountSiD, twilio__authToken);
-          const message = `Your Shipment order been processed and Approved awaiting pickup to deliver package, to track order TrackingID: ${Item_ID}`;
+          const current_location = savedOrder.current_location[0];
+          const message = `Order Status: Approved, awaiting driver to be assigned. Current Location:${current_location},
+          TrackingID:${Item_ID}. Check Email for login details`;
+          const url = `https://jimba.co.za/sms.php?cell=${owner_phoneNumber}&message=${message}`;
+          const data = await axios.get(url);
+
+          const user = await userModel.findOne({ username: owner_fullName });
+
+          if (user) {
+            return response.status(400).json({
+              msg:
+                "Account with this username already exist give user another username",
+            });
+          }
+
+          const salt = await Bcrypt.genSalt(15);
+          const password = passwordGenerator(15);
+          const hashedPassword = await Bcrypt.hash(password, salt);
+
+          const newUser = new userModel({
+            username: owner_fullName,
+            email: owner_email,
+            password: hashedPassword,
+            role: "Customer",
+          });
+
+          const savedUser = await newUser.save();
+          const transporter = nodemailer.createTransport({
+            service: "SendinBlue",
+            auth: {
+              user: process.env.sendinBlue__login,
+              pass: process.env.sendinBlue__pass,
+            },
+          });
 
           const messageOptions = {
-            body: message,
-            from: process.env.twilio__number,
-            to: process.env.test__number,
-          };
-          client.messages.create(messageOptions, (error, item) => {
-            if (error) {
-              return response.status(500).json({
-                msg: `Network Error: Failed to send ${owner_fullName} an sms`,
-              });
-            }
-
-            const transporter = nodemailer.createTransport({
-              service: "SendinBlue",
-              auth: {
-                user: process.env.sendinBlue__login,
-                pass: process.env.sendinBlue__pass,
-              },
-            });
-
-            const messageOptions = {
-              from: "noreply@ElegantDesigns",
-              to: owner_email,
-              subject: "Approved Shipment Order",
-              html: `
+            from: "noreply@ElegantDesigns",
+            to: owner_email,
+            subject: "Approved Shipment Order",
+            html: `
 
                     <h1>Shipment Order Approved</h1>
                     <h3>Waiting for pickup to deliver your package</h3>
                     <h4>Shipment TrackingID: ${Item_ID}</h4>
+
+                    <h1>Login Details</h1>
+                    <h1>username:${owner_fullName}</h1>
+                    <h1>pass:${password}</h1>
 
                     <h3 style="margin-top:3rem;">Queries?</h3>
                     <h4>Call: 0824566774</h4>
                     <h4>Email: ElegantDesign@gmail.com</h4>
                 
                 `,
-            };
+          };
 
-            transporter.sendMail(messageOptions, (error, info) => {
-              if (error) {
-                return response.status(500).json({
-                  msg: `Network Error:Failed to send ${owner_fullName} an email @${owner_email}`,
-                });
-              }
-
-              return response.status(201).json({
-                msg:
-                  "Shipment Order has been successfully created, Sms and Email has been sent",
+          transporter.sendMail(messageOptions, (error, info) => {
+            if (error) {
+              return response.status(500).json({
+                msg: `Network Error:Failed to send ${owner_fullName} an email @${owner_email}`,
               });
+            }
+
+            return response.status(201).json({
+              msg:
+                "Shipment Order has been successfully created, Sms and Email has been sent",
             });
           });
         }

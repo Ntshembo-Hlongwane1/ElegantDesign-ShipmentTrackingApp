@@ -11,7 +11,10 @@ const shipmentOrderSchema = new mongoose.Schema({
   Item_destination: { type: String, required: true },
   Item_ID: { type: String, required: true },
 
-  current_location: { type: Array, default: ["Gauteng"] },
+  current_location: {
+    type: Array,
+    default: ["Gauteng, Protea Glen 4th Avenue"],
+  },
   assignedDriver: { type: String, default: "" },
   status: { type: String, default: "Approved" },
 
@@ -23,3 +26,12 @@ export const shipmentOrderModel = mongoose.model(
   "shipmentOrdersModel",
   shipmentOrderSchema
 );
+
+/*
+  Admin:
+    * Select the Item tracked
+    * Updates location (SMS AND EMAIL SENT WHEN TRIGGERED ENDPOINT)
+  
+  Customer:
+    Show the routes / journey for the package as it travels
+*/

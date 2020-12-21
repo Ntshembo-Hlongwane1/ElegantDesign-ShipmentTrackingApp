@@ -1,0 +1,14 @@
+.PackageLocation {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.PackageLocation > input {
+  margin-top: 1rem;
+}
+
+.PackageLocation > button {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}

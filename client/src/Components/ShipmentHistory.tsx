@@ -1,22 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { FetchAllOrder } from "../store/Actions/FetchAllOrder/FetchAllOrder";
 import ScreenLoader from "../images/loadingScreen.gif";
 import "../StyleSheet/AllShipmentOrder.css";
-
 import "../StyleSheet/AssignDriverForm.css";
+import { FetchUserOrder } from "../store/Actions/FetchUsersOrders/FetchUserOrders";
+import { useHistory } from "react-router-dom";
 
 const ShipmentHistory = () => {
-  const { loading, ShipmentOrders, error } = useSelector(
-    (state) => state.AllShipmentOrders
+  const { loading, userHistoryOrders, error } = useSelector(
+    (state) => state.historyOrders
   );
 
   const [toggle, setToggle] = useState(false);
-  console.log(ShipmentOrders);
 
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(FetchAllOrder());
+    dispatch(FetchUserOrder());
   }, [dispatch]);
 
   const ToggleCard = () => {
@@ -33,9 +32,9 @@ const ShipmentHistory = () => {
       ) : error ? (
         <h4>{error}</h4>
       ) : (
-        ShipmentOrders && (
+        userHistoryOrders && (
           <div className="orders">
-            {ShipmentOrders.map((item: any, idx: number) => {
+            {userHistoryOrders.map((item: any, idx: number) => {
               return (
                 <div className="order__details">
                   <div className="user__orders">
@@ -65,9 +64,20 @@ const ShipmentHistory = () => {
                       </div>
                       <div className="package__location">
                         <h2>Package Location</h2>
-                        <h4>{`Where package is coming from: ${item.Item_primaryLocation}`}</h4>
-                        <h4>{`Where package is going: ${item.Item_destination}`}</h4>
-                        <h4>{`Current Location: ${item.current_location}`}</h4>
+
+                        {item.current_location.map(
+                          (location: String, idx: number) => {
+                            return idx === 0 ? (
+                              <h4
+                                key={idx}
+                              >{`Current Location: ${location}`}</h4>
+                            ) : (
+                              <h4
+                                key={idx}
+                              >{`Passed Locations: ${location}`}</h4>
+                            );
+                          }
+                        )}
                       </div>
                       <div className="package__status">
                         <h2>Order Status</h2>
