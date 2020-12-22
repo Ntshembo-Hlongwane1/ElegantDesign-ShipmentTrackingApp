@@ -61,7 +61,6 @@ class ShipmentOrderController extends ShipmentOrderFetcher_1.default {
                     Item_destination,
                     Item_ID,
                 });
-                //0659827280//
                 const savedOrder = yield newOrder.save();
                 /*
                  * Endpoint --> https://jimba.co.za/sms.php?cell=0731820631&message=Tesing%20the%20app

@@ -8,6 +8,11 @@ import "reactjs-popup/dist/index.css";
 import AssignDriverForm from "./AssignDriverForm";
 import "../StyleSheet/AssignDriverForm.css";
 import UpdatePackageLocation from "./UpdatePackageLocation";
+import axios from "axios";
+import ReactNotification from "react-notifications-component";
+import "react-notifications-component/dist/theme.css";
+import { store } from "react-notifications-component";
+
 const AllShipmentOrder = () => {
   const { loading, ShipmentOrders, error } = useSelector(
     (state) => state.AllShipmentOrders
@@ -25,6 +30,62 @@ const AllShipmentOrder = () => {
     setToggle(!toggle);
   };
 
+  const ServerResponse = (status: number, message: string) => {
+    switch (status) {
+      case 500:
+        store.addNotification({
+          title: "Shipment Status Change Fail",
+          message: message,
+          type: "danger",
+          insert: "top",
+          container: "top-right",
+          animationIn: ["animate__animated", "animate_fadeIn"],
+          animationOut: ["animate__animated", "animate_fadeOut"],
+          dismiss: {
+            duration: 5000,
+            onScreen: true,
+          },
+        });
+        break;
+
+      case 200:
+        store.addNotification({
+          title: "Shipment Status Change Success",
+          message: message,
+          type: "success",
+          insert: "top",
+          container: "top-right",
+          animationIn: ["animate__animated", "animate_fadeIn"],
+          animationOut: ["animate__animated", "animate_fadeOut"],
+          dismiss: {
+            duration: 5000,
+            onScreen: true,
+          },
+        });
+    }
+  };
+
+  const LeftWareHouse = async (ID: string) => {
+    const baseURL = {
+      dev: `http://localhost:5000/api/left-warehouse/${ID}`,
+      prod: "",
+    };
+    const url =
+      process.env.NODE_ENV === "production" ? baseURL.prod : baseURL.dev;
+
+    try {
+      const { data, status } = await axios.get(url, { withCredentials: true });
+      ServerResponse(status, data.msg);
+      console.log(data);
+    } catch (error) {
+      const { data, status } = error.response;
+      ServerResponse(status, data.msg);
+    }
+  };
+
+  const Alert = () => {
+    alert("Function not available on demo");
+  };
   return (
     <div className="AllShimentOrders">
       <div className="orders__headers">
@@ -39,7 +100,7 @@ const AllShipmentOrder = () => {
           <div className="orders">
             {ShipmentOrders.map((item: any, idx: number) => {
               return (
-                <div className="order__details">
+                <div className="order__details" key={item._id}>
                   <div className="user__orders">
                     <h2>{`Package Owner: Order #${idx + 1}`}</h2>
                     <div className="order__owner">
@@ -110,7 +171,10 @@ const AllShipmentOrder = () => {
                           <AssignDriverForm packageID={item._id} />
                         </Popup>
 
-                        <button>Cancel Order</button>
+                        <button onClick={() => LeftWareHouse(item._id)}>
+                          Left WareHouse
+                        </button>
+                        <button onClick={Alert}>Package Arrived</button>
                         <Popup
                           trigger={<button>Update Package Location</button>}
                           position="right top"
@@ -134,6 +198,7 @@ const AllShipmentOrder = () => {
           </div>
         )
       )}
+      <ReactNotification className="Notifaction-card" />
     </div>
   );
 };
